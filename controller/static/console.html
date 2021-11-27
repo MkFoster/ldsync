@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDSync Console</title>
+</head>
+
+<body>
+    <button id="evtBtn">Fire Event!</button>
+    <!-- p id="svrMsgs"></p -->
+    <script>
+        const svrMsgs = document.querySelector('#svrMsgs');
+
+        const socket = new WebSocket('wss://wl-vz-nyc.ldsync.com');
+        socket.addEventListener('open', (e) => {
+            //socket.send('Hello Server!  This is a web device calling!');
+            console.log('Connected to server');
+        });
+
+        socket.addEventListener('message', (e) => {
+            //alert('Message from the server: ' + JSON.stringify(e.data, '', 4));
+            //svrMsgs.innerHTML = svrMsgs.innerHTML + e.data.toString() + "<br>";
+        });
+
+        const evtBtn = document.querySelector('#evtBtn');
+        evtBtn.addEventListener('click', (e) => {
+            evtObj = {
+                color: "#FF0000"
+            };
+            socket.send(JSON.stringify(evtObj));
+        });
+    </script>
+</body>
+
+</html>

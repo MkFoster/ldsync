@@ -1,0 +1,23 @@
+{
+    "name": "express-webapp-template",
+    "version": "1.0.0",
+    "description": "A simple Node/Express web app template project",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MkFoster/node-express-webapp-template.git"
+    },
+    "author": "Mark Foster",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/MkFoster/node-express-webapp-template/issues"
+    },
+    "homepage": "https://github.com/MkFoster/node-express-webapp-template#readme",
+    "dependencies": {
+        "express": "4.17.1",
+        "ws": "^8.2.3"
+    }
+}
