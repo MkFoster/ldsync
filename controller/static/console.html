@@ -1,19 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LDSync Console</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body {
+            padding: 20px;
+            background-color: black;
+            color: white;
+            font-family: BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+        }
+
+        .slider {
+            writing-mode: bt-lr;
+            /* IE */
+            -webkit-appearance: slider-vertical;
+            /* WebKit */
+            width: 8px;
+            height: 300px;
+            padding: 0 5px;
+        }
+    </style>
 </head>
 
 <body>
-    <button id="evtBtn">Fire Event!</button>
+    <img src="ldsync-logo-text.svg" width="160px" alt="LD Sync Logo">
+    <!--button id="evtBtn">Fire Event!</button-->
+    <div class="section" id="faders">
+        <input class="slider" type="range" id="ch1" name="1" min="0" max="255" step="5" orient="vertical">
+        <label for="ch1">CH 1</label>
+        <input class="slider" type="range" id="ch2" name="2" min="0" max="255" step="5" orient="vertical">
+        <label for="ch2">CH 2</label>
+        <input class="slider" type="range" id="ch3" name="3" min="0" max="255" step="5" orient="vertical">
+        <label for="ch3">CH 3</label>
+        <input class="slider" type="range" id="ch4" name="4" min="0" max="255" step="5" orient="vertical">
+        <label for="ch4">CH 4</label>
+        <input class="slider" type="range" id="ch5" name="5" min="0" max="255" step="5" orient="vertical">
+        <label for="ch5">CH 5</label>
+        <input class="slider" type="range" id="ch6" name="6" min="0" max="255" step="5" orient="vertical">
+        <label for="ch6">CH 6</label>
+        <input class="slider" type="range" id="ch7" name="7" min="0" max="255" step="5" orient="vertical">
+        <label for="ch7">CH 7</label>
+        <input class="slider" type="range" id="ch8" name="8" min="0" max="255" step="5" orient="vertical">
+        <label for="ch8">CH 8</label>
+    </div>
     <!-- p id="svrMsgs"></p -->
     <script>
         const svrMsgs = document.querySelector('#svrMsgs');
+        const faders = document.querySelector('#faders');
 
+        //const socket = new WebSocket('ws://localhost:80');
         const socket = new WebSocket('wss://wl-vz-nyc.ldsync.com');
         socket.addEventListener('open', (e) => {
             //socket.send('Hello Server!  This is a web device calling!');
@@ -25,12 +65,15 @@
             //svrMsgs.innerHTML = svrMsgs.innerHTML + e.data.toString() + "<br>";
         });
 
-        const evtBtn = document.querySelector('#evtBtn');
-        evtBtn.addEventListener('click', (e) => {
+        faders.addEventListener('input', e => {
             evtObj = {
-                color: "#FF0000"
+                ch: parseInt(e.target.name),
+                val: parseInt(e.target.value)
             };
-            socket.send(JSON.stringify(evtObj));
+            console.log(evtObj);
+            if (socket.readyState === 1) {
+                socket.send(JSON.stringify(evtObj));
+            }
         });
     </script>
 </body>

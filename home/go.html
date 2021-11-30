@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LD Sync Go</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body {
+            padding: 20px;
+            background-color: black;
+            color: white;
+            font-family: BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="ldsync-logo-text.svg" width="160px" alt="LD Sync Logo">
+    <h1>LD Sync Home</h1>
+    <h3>Testing your connection to the LD Sync Controller on the Verizon New York City Wavelength Zone...</h3>
+    <progress id="progress"></progress>
+    <div id="status"></div>
+    <script>
+        (async function () {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+                const resp = await fetch('https://wl-vz-nyc.ldsync.com/test.json', { signal: controller.signal });
+                if (!resp.ok) {
+                    throw new Error(response.statusText);
+                } else {
+                    const respObj = await resp.json();
+                    console.log(respObj);
+                    window.location.href = "https://wl-vz-nyc.ldsync.com";
+                }
+            } catch (e) {
+                console.log(e);
+                document.querySelector('#status').innerHTML = `<p>It looks like you can't reach the LD Sync Verizon NYC controller.  Make sure you are using a Verizon device and NOT connected to any WiFi networks.</p>`;
+            }
+            document.querySelector('#progress').remove();
+        })();
+    </script>
+</body>
+
+</html>

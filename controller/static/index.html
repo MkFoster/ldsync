@@ -1,18 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LDSync Console</title>
+    <title>LDSync Live App</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body {
+            padding: 20px;
+            background-color: black;
+            color: white;
+            font-family: BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+        }
+    </style>
 </head>
 
 <body>
+    <img src="ldsync-logo-text.svg" width="160px" alt="LD Sync Logo">
     <!-- button id="evtBtn">Fire Event!</button -->
     <p id="svrMsgs"></p>
     <script>
         const svrMsgs = document.querySelector('#svrMsgs');
+
+        const chObj = {
+            1: 130, //Red
+            2: 130, //Green
+            3: 130 //Blue
+        };
 
         const socket = new WebSocket('wss://wl-vz-nyc.ldsync.com');
         socket.addEventListener('open', (e) => {
@@ -21,11 +37,15 @@
         });
 
         socket.addEventListener('message', (e) => {
-            //alert('Message from the server: ' + JSON.stringify(e.data, '', 4));
             svrMsgs.innerHTML = svrMsgs.innerHTML + e.data.toString() + "<br>";
             const evtObj = JSON.parse(e.data.toString());
-            document.body.style.backgroundColor = evtObj.color;
+            setColor(evtObj);
         });
+
+        function setColor(evtObj) {
+            chObj[evtObj.ch] = evtObj.val;
+            document.body.style.backgroundColor = `rgb(${chObj[1]},${chObj[2]},${chObj[3]})`;
+        }
     </script>
 </body>
 

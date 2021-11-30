@@ -3,16 +3,20 @@
 const express = require("express");
 const fs = require("fs");
 const https = require("https");
+//const http = require("http");
 const ws = require("ws");
+const cors = require("cors");
 
 const app = express();
 
-app.use(express.static("static"));
+const options = {
+    index: "index.html",
+};
 
-app.get("/", (req, res) => {
-    res.send("Hello from the LD Sync Controller!");
-});
+app.use(cors());
+app.use(express.static(__dirname + "/static", options));
 
+//const server = http.createServer(
 const server = https.createServer(
     {
         key: fs.readFileSync(`${__dirname}/../privkey.pem`, "utf8"),
@@ -32,10 +36,9 @@ wss.on("connection", (socket, req) => {
             client.send(msg.toString());
         });
     });
-
-    socket.send("some text");
 });
 
-server.listen(443, () =>
+server.listen(443, "localhost");
+server.on("listening", () =>
     console.log("LD Sync Controller listening on port 443!")
 );

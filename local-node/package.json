@@ -1,0 +1,29 @@
+{
+  "name": "local-node",
+  "version": "1.0.0",
+  "description": "LD Sync Local Node connects to a central controller via websockets and listens for incoming lighting events.  When an event arrives with a destination channel on the DMX network, local node passes the event along through an attached DMX hardware interface.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MkFoster/ldsync.git"
+  },
+  "keywords": [
+    "dmx",
+    "websockets",
+    "node",
+    "javascript"
+  ],
+  "author": "Mark Foster",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MkFoster/ldsync/issues"
+  },
+  "homepage": "https://github.com/MkFoster/ldsync#readme",
+  "dependencies": {
+    "enttec-open-dmx-usb": "3.0.0",
+    "ws": "8.3.0"
+  }
+}
