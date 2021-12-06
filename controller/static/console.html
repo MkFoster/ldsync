@@ -7,74 +7,389 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LDSync Console</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="rangeslider.css">
+    <link rel="stylesheet" href="nouislider.min.css">
     <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
         body {
-            padding: 20px;
+            margin: 0px;
             background-color: black;
             color: white;
             font-family: BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+            display: grid;
+            grid-template-rows: 6vh 47vh 47vh;
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        header {
+            margin: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        #fixtures {
+            display: grid;
+            grid-template-rows: 1fr 9fr;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        #scenes {
+            display: grid;
+            grid-template-rows: 1fr 9fr;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        #buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        #buttons>div {
+            border: 3px solid #fff;
+            margin: 20px;
+            padding: 20px;
+            padding-bottom: 0;
+        }
+
+        #faders {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 3px solid #fff;
+            margin: 20px;
+            margin-top: 0;
+        }
+
+        button {
+            font-size: 20px;
+        }
+
+        .faderblock {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            min-width: 320px;
+            padding: 20px;
         }
 
         .slider {
+            display: grid;
+            grid-template-rows: auto 30px;
+            place-items: center;
+        }
+
+        .column {
+            padding: 20px;
+        }
+
+        input[type=range][orient=vertical] {
             writing-mode: bt-lr;
             /* IE */
             -webkit-appearance: slider-vertical;
             /* WebKit */
             width: 8px;
-            height: 300px;
             padding: 0 5px;
+        }
+
+        input[type="radio"] {
+            transform: scale(3);
+            margin: 20px;
+        }
+
+        input[type="range"] {
+            transform: scale(2.5);
+        }
+
+        .ok {
+            fill: limegreen;
+        }
+
+        .status {
+            display: grid;
+            grid-template-columns: 50px auto;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
 
 <body>
-    <img src="ldsync-logo-text.svg" width="160px" alt="LD Sync Logo">
-    <!--button id="evtBtn">Fire Event!</button-->
-    <div class="section" id="faders">
-        <input class="slider" type="range" id="ch1" name="1" min="0" max="255" step="5" orient="vertical">
-        <label for="ch1">CH 1</label>
-        <input class="slider" type="range" id="ch2" name="2" min="0" max="255" step="5" orient="vertical">
-        <label for="ch2">CH 2</label>
-        <input class="slider" type="range" id="ch3" name="3" min="0" max="255" step="5" orient="vertical">
-        <label for="ch3">CH 3</label>
-        <input class="slider" type="range" id="ch4" name="4" min="0" max="255" step="5" orient="vertical">
-        <label for="ch4">CH 4</label>
-        <input class="slider" type="range" id="ch5" name="5" min="0" max="255" step="5" orient="vertical">
-        <label for="ch5">CH 5</label>
-        <input class="slider" type="range" id="ch6" name="6" min="0" max="255" step="5" orient="vertical">
-        <label for="ch6">CH 6</label>
-        <input class="slider" type="range" id="ch7" name="7" min="0" max="255" step="5" orient="vertical">
-        <label for="ch7">CH 7</label>
-        <input class="slider" type="range" id="ch8" name="8" min="0" max="255" step="5" orient="vertical">
-        <label for="ch8">CH 8</label>
+    <header>
+        <img src="ldsync-logo-text.svg" width="160px" alt="LD Sync Logo">
+        <div id="connectionStatus" class="status">
+            <svg id="connection" aria-hidden="true" focusable="false" height="50" width="50">
+                <circle cx="25" cy="25" r="15" fill="red" />
+            </svg>
+            <h2>Connection Status</h2>
+        </div>
+        <div id="hearbeat" class="status">
+            <svg id="heartbeatIndicator" aria-hidden="true" focusable="false" height="50" width="50">
+                <circle cx="25" cy="25" r="15" fill="gray" />
+            </svg>
+            <h2>Heartbeat</h2>
+        </div>
+    </header>
+    <div id="buttons">
+        <div id="fixtures">
+            <h2>Fixtures</h2>
+            <div id="address">1</div>
+            <div class="fixturecolumn">
+                <input type="radio" id="fixture1" name="fixture" value="1" checked>
+                <label for="fixture1">1</label><br>
+                <input type="radio" id="fixture2" name="fixture" value="9">
+                <label for="fixture2">2</label><br>
+                <input type="radio" id="fixture3" name="fixture" value="17">
+                <label for="fixture3">3</label><br>
+                <input type="radio" id="fixture4" name="fixture" value="25">
+                <label for="fixture4">4</label><br>
+                <input type="radio" id="fixture5" name="fixture" value="33">
+                <label for="fixture5">5</label><br>
+                <input type="radio" id="fixture6" name="fixture" value="41">
+                <label for="fixture6">6</label><br>
+            </div>
+            <div class="fixturecolumn">
+                <input type="radio" id="fixture7" name="fixture" value="49">
+                <label for="fixture7">7</label><br>
+                <input type="radio" id="fixture8" name="fixture" value="57">
+                <label for="fixture8">8</label><br>
+                <input type="radio" id="fixture9" name="fixture" value="65">
+                <label for="fixture9">9</label><br>
+                <input type="radio" id="fixture10" name="fixture" value="73">
+                <label for="fixture10">10</label><br>
+                <input type="radio" id="fixture11" name="fixture" value="81">
+                <label for="fixture11">11</label><br>
+                <input type="radio" id="fixture12" name="fixture" value="89">
+                <label for="fixture12">12</label><br>
+            </div>
+        </div>
+        <div id="scenes">
+            <h2>Scenes</h2>
+            <div id="selectedScene"></div>
+            <div class="scenecolumn">
+                <input type="radio" id="scene1" name="scene" value="1">
+                <label for="scene1">1</label><br>
+                <input type="radio" id="scene2" name="scene" value="2">
+                <label for="scene2">2</label><br>
+                <input type="radio" id="scene3" name="scene" value="3">
+                <label for="scene3">3</label><br>
+                <input type="radio" id="scene4" name="scene" value="4">
+                <label for="scene4">4</label><br>
+                <input type="radio" id="scene5" name="scene" value="5">
+                <label for="scene5">5</label><br>
+                <input type="radio" id="scene6" name="scene" value="6">
+                <label for="scene6">6</label><br>
+            </div>
+            <div class="scenecolumn">
+                <input type="radio" id="scene7" name="scene" value="7">
+                <label for="scene7">7</label><br>
+                <input type="radio" id="scene8" name="scene" value="8">
+                <label for="scene8">8</label><br>
+                <input type="radio" id="scene9" name="scene" value="9">
+                <label for="scene9">9</label><br>
+                <input type="radio" id="scene10" name="scene" value="10">
+                <label for="scene10">10</label><br>
+                <input type="radio" id="scene11" name="scene" value="11">
+                <label for="scene11">11</label><br>
+                <input type="radio" id="scene12" name="scene" value="12">
+                <label for="scene12">12</label><br>
+            </div>
+        </div>
+        <div id="program">
+            <h2>Program</h2>
+            <div class="column">
+                <button type="button" id="addScene">Add Scene</button>
+            </div>
+        </div>
+    </div>
+    <div id="faders">
+        <div id="faders1" class="faderblock">
+            <div class=slider>
+                <input type="range" id="ch1" name="1" min="0" max="255" step="5" value="0" orient="vertical">
+                <label for="ch1">CH 1</label>
+            </div>
+            <div class=slider>
+                <input type="range" id="ch2" name="2" min="0" max="255" step="5" value="0" orient="vertical">
+                <label for="ch2">CH 2</label>
+            </div>
+            <div class=slider>
+                <input type="range" id="ch3" name="3" min="0" max="255" step="5" value="0" orient="vertical">
+                <label for="ch3">CH 3</label>
+            </div>
+            <div class=slider>
+                <input type="range" id="ch4" name="4" min="0" max="255" step="5" value="0" orient="vertical">
+                <label for="ch4">CH 4</label>
+            </div>
+        </div>
+        <div id="faders2" class="faderblock">
+            <div class=slider>
+                <input type="range" id="ch5" name="5" min="0" max="255" step="5" value="0" orient="vertical">
+                <label for="ch5">CH 5</label>
+            </div>
+            <div class=slider>
+                <input type="range" id="ch6" name="6" min="0" max="255" step="5" value="0" orient="vertical">
+                <label for="ch6">CH 6</label>
+            </div>
+            <div class=slider>
+                <input type="range" id="ch7" name="7" min="0" max="255" step="5" value="0" orient="vertical">
+                <label for="ch7">CH 7</label>
+            </div>
+            <div class=slider>
+                <input type="range" id="ch8" name="8" min="0" max="255" step="5" value="0" orient="vertical">
+                <label for="ch8">CH 8</label>
+            </div>
+        </div>
     </div>
     <!-- p id="svrMsgs"></p -->
     <script>
         const svrMsgs = document.querySelector('#svrMsgs');
-        const faders = document.querySelector('#faders');
+        const fixtures = document.querySelector('#fixtures');
+        const addScene = document.querySelector('#addScene');
+        let isAddingScene = false;
+        //let startAddress = 1;
+        let consoleData = JSON.parse(localStorage.getItem("consoleData"));
+        if (!consoleData) {
+            consoleData = {
+                currentScene: {},
+                scenes: {}
+            };
+        }
 
-        //const socket = new WebSocket('ws://localhost:80');
-        const socket = new WebSocket('wss://wl-vz-nyc.ldsync.com');
+        const socket = new WebSocket('ws://localhost:80');
+        //const socket = new WebSocket('wss://wl-vz-nyc.ldsync.com');
         socket.addEventListener('open', (e) => {
             //socket.send('Hello Server!  This is a web device calling!');
             console.log('Connected to server');
+            document.querySelector('#connectionStatus > svg > circle').classList.add('ok');
+        });
+
+        socket.addEventListener('close', (e) => {
+            document.querySelector('#connectionStatus > svg > circle').classList.remove('ok');
+        });
+
+        socket.addEventListener('error', (e) => {
+            document.querySelector('#connectionStatus > svg > circle').classList.remove('ok');
+            console.log('WebSocket Error: ', e);
         });
 
         socket.addEventListener('message', (e) => {
-            //alert('Message from the server: ' + JSON.stringify(e.data, '', 4));
-            //svrMsgs.innerHTML = svrMsgs.innerHTML + e.data.toString() + "<br>";
+            const evtObj = JSON.parse(e.data.toString());
+            if (evtObj.hasOwnProperty('heartbeat')) {
+                document.querySelector('#hearbeat > svg > circle').classList.add('ok');
+                const endBlink = setTimeout(() => {
+                    document.querySelector('#hearbeat > svg > circle').classList.remove('ok');
+                }, 500);
+            }
         });
 
+        fixtures.addEventListener('change', (e) => {
+            const startAddress = e.target.value;
+            setFaders(parseInt(startAddress));
+        });
+
+        scenes.addEventListener('change', (e) => {
+            const selectedScene = parseInt(e.target.value);
+            if (isAddingScene) {
+                if (!consoleData.scenes) {
+                    consoleData.scenes = {};
+                }
+                console.log('Adding selected scene: ', selectedScene);
+                console.log('Scene about to be added: ', consoleData.currentScene);
+                delete consoleData.scenes[selectedScene];
+                consoleData.scenes[selectedScene] = copyScene(consoleData.currentScene);
+                saveConsoleData();
+                isAddingScene = false;
+                console.log('Saved: ', consoleData.scenes);
+            } else {
+                if (consoleData.scenes[selectedScene]) {
+                    delete consoleData.currentScene;
+                    consoleData.currentScene = copyScene(consoleData.scenes[selectedScene]);
+                    const startAddress = getCurrentFixtureStartAddress();
+                    setFaders(parseInt(startAddress));
+                    const evtObj = copyScene(consoleData.currentScene);
+                    console.log('Sending : ', JSON.stringify(evtObj));
+                    if (socket.readyState === 1) {
+                        socket.send(JSON.stringify(evtObj));
+                    }
+                    saveConsoleData();
+                    console.log('Scene loaded: ', selectedScene, consoleData.currentScene);
+                }
+            }
+            //if Add Scene was pressed, copy current fixture settings
+            //Otherwise send the selected scene fixture values in a hurry!
+            document.querySelector('#address').textContent = selectedScene;
+        });
+
+        addScene.addEventListener('click', () => {
+            console.log('Adding Scene');
+            isAddingScene = true;
+            if (document.querySelector('input[name="scene"]:checked')) {
+                document.querySelector('input[name="scene"]:checked').checked = false;
+            }
+        });
+
+        function updateOutput(el, val) {
+            el.textContent = val;
+        }
+
+        function saveConsoleData() {
+            localStorage.setItem('consoleData', JSON.stringify(consoleData));
+        }
+
+        function getCurrentFixtureStartAddress() {
+            return parseInt(document.querySelector('input[name="fixture"]:checked').value);
+        }
+
+        function copyScene(scene) {
+            const sceneCopyObj = {};
+            for (const ch in scene) {
+                if (typeof scene[ch] === 'number') {
+                    sceneCopyObj[ch] = scene[ch];
+                }
+            }
+            return sceneCopyObj;
+        }
+
+        //startAddress should be an integer
+        function setFaders(startAddress) {
+            document.querySelector('#address').textContent = startAddress;
+            console.log('setFaders: ', consoleData.currentScene);
+            for (let i = 0; i <= 7; i++) {
+                if (consoleData.currentScene[startAddress + i] !== undefined) {
+                    document.querySelector('#ch' + (i + 1)).value = consoleData.currentScene[startAddress + i];
+                } else {
+                    document.querySelector('#ch' + (i + 1)).value = 0;
+                }
+            }
+        }
+
+        const faders = document.querySelector('#faders');
         faders.addEventListener('input', e => {
-            evtObj = {
-                ch: parseInt(e.target.name),
-                val: parseInt(e.target.value)
+            const newValInt = parseInt(e.target.value);
+            const nameInt = parseInt(e.target.name);
+            const startAddress = getCurrentFixtureStartAddress();
+            //Save currently selected fixture values to local storage
+            consoleData.currentScene[startAddress + nameInt - 1] = newValInt;
+            saveConsoleData();
+            const evtObj = {
+                [startAddress + nameInt - 1]: newValInt
             };
-            console.log(evtObj);
             if (socket.readyState === 1) {
                 socket.send(JSON.stringify(evtObj));
             }
         });
+
+        //Set the faders for the first fixture when this app loads
+        setFaders(1);
     </script>
 </body>
 
