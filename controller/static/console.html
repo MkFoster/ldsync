@@ -31,6 +31,12 @@
             margin: 0;
         }
 
+        body>#faders,
+        #buttons>div {
+            border-radius: 25px;
+            background-color: #222;
+        }
+
         header {
             margin: 20px;
             display: grid;
@@ -52,11 +58,12 @@
         #buttons {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
+            margin: 20px;
+            column-gap: 20px;
         }
 
         #buttons>div {
             border: 3px solid #fff;
-            margin: 20px;
             padding: 20px;
             padding-bottom: 0;
         }
@@ -332,8 +339,8 @@
             };
         }
 
-        const socket = new WebSocket('ws://localhost:80');
-        //const socket = new WebSocket('wss://wl-vz-nyc.ldsync.com');
+        //const socket = new WebSocket('ws://localhost:80');
+        const socket = new WebSocket('wss://wl-vz-nyc.ldsync.com');
         socket.addEventListener('open', (e) => {
             //socket.send('Hello Server!  This is a web device calling!');
             console.log('Connected to server');

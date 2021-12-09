@@ -4,8 +4,8 @@ const dmx = require("enttec-open-dmx-usb");
 const dmxDevice = dmx.EnttecOpenDMXUSBDevice;
 
 (async () => {
-    //const socket = new ws.WebSocket("wss://wl-vz-nyc.ldsync.com");
-    const socket = new ws.WebSocket("ws://localhost:80");
+    const socket = new ws.WebSocket("wss://wl-vz-nyc.ldsync.com");
+    //const socket = new ws.WebSocket("ws://localhost:80");
     socket.on("open", function open() {
         console.log("Connected to the controller.");
     });
