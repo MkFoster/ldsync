@@ -83,7 +83,7 @@ function authenticate(user, password) {
     }
 }
 
-server.listen(443, "localhost");
+server.listen(443);
 server.on("listening", () =>
     console.log("LD Sync Controller listening on port 443!")
 );
