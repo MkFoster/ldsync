@@ -20,9 +20,9 @@
 <body>
     <img src="ldsync-logo-text.svg" width="160px" alt="LD Sync Logo">
     <!-- button id="evtBtn">Fire Event!</button -->
-    <p id="svrMsgs"></p>
+    //<p id="svrMsgs"></p>
     <script>
-        const svrMsgs = document.querySelector('#svrMsgs');
+        //const svrMsgs = document.querySelector('#svrMsgs');
 
         const chObj = {
             1: 130, //Red
@@ -37,7 +37,7 @@
         });
 
         socket.addEventListener('message', (e) => {
-            svrMsgs.innerHTML = svrMsgs.innerHTML + e.data.toString() + "<br>";
+            //svrMsgs.innerHTML = svrMsgs.innerHTML + e.data.toString() + "<br>";
             const evtObj = JSON.parse(e.data.toString());
             setColor(evtObj);
         });
