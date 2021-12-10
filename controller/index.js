@@ -56,7 +56,7 @@ wss.on("connection", (socket, req) => {
                 wss.clients.forEach((client) => {
                     if (
                         client !== socket &&
-                        client.readyState === WebSocket.OPEN
+                        client.readyState === ws.WebSocket.OPEN
                     ) {
                         client.send(msgStr);
                     }

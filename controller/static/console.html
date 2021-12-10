@@ -23,8 +23,7 @@
             color: white;
             font-family: BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
             display: grid;
-            grid-template-rows: 60px 430px minmax(300px, 1fr);
-            height: 100vh;
+            grid-template-rows: 60px 340px 330px;
         }
 
         h2 {
@@ -45,19 +44,20 @@
 
         #fixtures {
             display: grid;
-            grid-template-rows: 1fr 9fr;
+            grid-template-rows: 40px 220px;
             grid-template-columns: 1fr 1fr;
         }
 
         #scenes {
             display: grid;
-            grid-template-rows: 1fr 9fr;
+            grid-template-rows: 40px 220px;
             grid-template-columns: 1fr 1fr;
         }
 
         #buttons {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 300px;
             margin: 20px;
             column-gap: 20px;
         }
@@ -108,7 +108,7 @@
         }
 
         input[type="radio"] {
-            transform: scale(3);
+            transform: scale(2.5);
             margin: 20px;
         }
 
@@ -217,24 +217,16 @@
                 <label for="fixture3">3</label><br>
                 <input type="radio" id="fixture4" name="fixture" value="25">
                 <label for="fixture4">4</label><br>
+            </div>
+            <div class="fixturecolumn">
                 <input type="radio" id="fixture5" name="fixture" value="33">
                 <label for="fixture5">5</label><br>
                 <input type="radio" id="fixture6" name="fixture" value="41">
                 <label for="fixture6">6</label><br>
-            </div>
-            <div class="fixturecolumn">
                 <input type="radio" id="fixture7" name="fixture" value="49">
                 <label for="fixture7">7</label><br>
                 <input type="radio" id="fixture8" name="fixture" value="57">
                 <label for="fixture8">8</label><br>
-                <input type="radio" id="fixture9" name="fixture" value="65">
-                <label for="fixture9">9</label><br>
-                <input type="radio" id="fixture10" name="fixture" value="73">
-                <label for="fixture10">10</label><br>
-                <input type="radio" id="fixture11" name="fixture" value="81">
-                <label for="fixture11">11</label><br>
-                <input type="radio" id="fixture12" name="fixture" value="89">
-                <label for="fixture12">12</label><br>
             </div>
         </div>
         <div id="scenes">
@@ -249,24 +241,16 @@
                 <label for="scene3">3</label><br>
                 <input type="radio" id="scene4" name="scene" value="4">
                 <label for="scene4">4</label><br>
+            </div>
+            <div class="scenecolumn">
                 <input type="radio" id="scene5" name="scene" value="5">
                 <label for="scene5">5</label><br>
                 <input type="radio" id="scene6" name="scene" value="6">
                 <label for="scene6">6</label><br>
-            </div>
-            <div class="scenecolumn">
                 <input type="radio" id="scene7" name="scene" value="7">
                 <label for="scene7">7</label><br>
                 <input type="radio" id="scene8" name="scene" value="8">
                 <label for="scene8">8</label><br>
-                <input type="radio" id="scene9" name="scene" value="9">
-                <label for="scene9">9</label><br>
-                <input type="radio" id="scene10" name="scene" value="10">
-                <label for="scene10">10</label><br>
-                <input type="radio" id="scene11" name="scene" value="11">
-                <label for="scene11">11</label><br>
-                <input type="radio" id="scene12" name="scene" value="12">
-                <label for="scene12">12</label><br>
             </div>
         </div>
         <div id="program">
@@ -339,7 +323,7 @@
             };
         }
 
-        //const socket = new WebSocket('ws://localhost:80');
+        //const socket = new WebSocket('ws://192.168.1.116:80');
         const socket = new WebSocket('wss://wl-vz-nyc.ldsync.com');
         socket.addEventListener('open', (e) => {
             //socket.send('Hello Server!  This is a web device calling!');
