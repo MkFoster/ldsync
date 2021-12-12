@@ -23,11 +23,13 @@
     <!--p id="svrMsgs"></p-->
     <script>
         //const svrMsgs = document.querySelector('#svrMsgs');
+        const startAddress = 1;
 
         const chObj = {
-            1: 130, //Red
-            2: 130, //Green
-            3: 130 //Blue
+            red: 0, //Red
+            green: 0, //Green
+            blue: 0, //Blue
+            alpha: 0
         };
 
         const socket = new WebSocket('wss://wl-vz-nyc.ldsync.com');
@@ -37,14 +39,26 @@
         });
 
         socket.addEventListener('message', (e) => {
-            //svrMsgs.innerHTML = svrMsgs.innerHTML + e.data.toString() + "<br>";
-            const evtObj = JSON.parse(e.data.toString());
-            setColor(evtObj);
+            const signal = JSON.parse(e.data.toString());
+            console.log(signal);
+            setColor(signal);
         });
 
-        function setColor(evtObj) {
-            chObj[evtObj.ch] = evtObj.val;
-            document.body.style.backgroundColor = `rgb(${chObj[1]},${chObj[2]},${chObj[3]})`;
+        function setColor(signal) {
+            for (const ch in signal) {
+                const chInt = parseInt(ch);
+                const valInt = parseInt(signal[ch]);
+                if (chInt === startAddress) {
+                    //chObj.alpha = valInt / 255;
+                } else if (chInt === (startAddress + 1)) {
+                    chObj.red = valInt;
+                } else if (chInt === (startAddress + 2)) {
+                    chObj.green = valInt;
+                } else if (chInt === (startAddress + 3)) {
+                    chObj.blue = valInt;
+                }
+                document.body.style.backgroundColor = `rgb(${chObj.red},${chObj.green},${chObj.blue})`;
+            }
         }
     </script>
 </body>

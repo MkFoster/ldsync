@@ -13,15 +13,19 @@ const dmxDevice = dmx.EnttecOpenDMXUSBDevice;
     const device = new dmxDevice(await dmxDevice.getFirstAvailableDevice());
 
     socket.on("message", (data) => {
-        console.log("received ", JSON.parse(data.toString()));
+        //console.log("received ", JSON.parse(data.toString()));
         const signal = JSON.parse(data.toString());
 
         for (const ch in signal) {
-            const chInt = parseInt(ch);
-            console.log("Setting channel: ", chInt, " level: ", signal[ch]);
-            device.setChannels({
-                [chInt]: parseInt(signal[ch]),
-            });
+            if (ch === "heartbeat") {
+                console.log("Heartbeat: " + new Date().toLocaleString());
+            } else {
+                const chInt = parseInt(ch);
+                console.log(`Setting Channel: ${chInt}, Level: ${signal[ch]}`);
+                device.setChannels({
+                    [chInt]: parseInt(signal[ch]),
+                });
+            }
         }
     });
 })();
